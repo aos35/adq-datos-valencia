@@ -1,0 +1,43 @@
+# Documentación del Proyecto: Grafo de Conocimiento de Distritos de Valencia
+
+Este documento explica de manera sencilla qué hace el código del proyecto y qué contiene el archivo de resultados.
+
+## 1. ¿Qué hace el código (`codigo.ipynb`)?
+
+El código es un script de Python (en un Jupyter Notebook) que convierte datos "planos" (un CSV) en un **Grafo de Conocimiento** enriquecido. El proceso paso a paso es el siguiente:
+
+1.  **Configuración**: Prepara las herramientas necesarias (`rdflib` para grafos, `pandas` para tablas) y define los "diccionarios" (vocabularios como `schema.org`) que usaremos para describir los datos.
+2.  **Lectura de Datos**: Carga el archivo `districtes-distritos.csv`, que contiene la lista de distritos de Valencia con sus códigos y datos geográficos.
+3.  **Limpieza**: Revisa los datos y descarta filas erróneas o corruptas que puedan existir en el archivo original.
+4.  **Creación del Grafo (Transformación a RDF)**: Va distrito por distrito creando una ficha digital (un "recurso") con la siguiente información:
+    *   **Identidad**: Le asigna un nombre y un código identificador.
+    *   **Enriquecimiento con Wikidata**: Conecta cada distrito con su página correspondiente en Wikidata (la base de datos de Wikipedia). Esto se hace mediante la propiedad `sameAs` ("es lo mismo que"), lo que permite a las máquinas saber que nuestro "Ciutat Vella" es el mismo que el de Wikidata.
+    *   **Geografía**: Añade la forma del distrito (polígono) y su punto central (coordenadas latitud/longitud) para poder representarlo en mapas.
+5.  **Guardado**: Finalmente, escribe toda esta información estructurada en un archivo `.ttl`.
+
+## 2. ¿Qué es `valencia_districts_places_enriched.ttl`?
+
+Es el **resultado final** del código. La extensión `.ttl` significa **Turtle**, que es un formato estándar para guardar Grafos de Conocimiento (RDF).
+
+Imagina este archivo como una lista de frases muy simples que una máquina puede leer, del estilo:
+*   *El recurso "Distrito Ciutat Vella" -> es un -> "Lugar".*
+*   *El recurso "Distrito Ciutat Vella" -> tiene el nombre -> "CIUTAT VELLA".*
+*   *El recurso "Distrito Ciutat Vella" -> es igual a -> "Wikidata Q6207322".*
+*   *El recurso "Distrito Ciutat Vella" -> tiene coordenadas -> (39.47, -0.37).*
+
+Gracias a este archivo, los datos de los distritos de Valencia ahora son **Linked Data** (Datos Enlazados): están estructurados, estandarizados y conectados con el conocimiento global (Wikidata), listos para ser usados en aplicaciones inteligentes, mapas o análisis de datos avanzados.
+
+## 3. Visualización en Wikidata (Consulta SPARQL)
+
+El código incluye al final una consulta **SPARQL** diseñada para ser ejecutada en el [Servicio de Consultas de Wikidata](https://query.wikidata.org/).
+
+Esta consulta permite visualizar en un mapa interactivo los distritos de Valencia que hemos procesado. Funciona de la siguiente manera:
+1.  **Selección de Distritos**: Utiliza una lista predefinida de identificadores de Wikidata (QIDs) que corresponden a los distritos de Valencia (ej. `wd:Q3392733` para Ciutat Vella).
+2.  **Obtención de Coordenadas**: Pide a Wikidata la ubicación geográfica (`wdt:P625`) de cada uno de esos distritos.
+3.  **Etiquetado**: Recupera los nombres legibles de los distritos en español o el idioma del usuario.
+4.  **Mapa**: Gracias a la instrucción `#defaultView:Map`, Wikidata muestra los resultados directamente sobre un mapa mundial.
+
+Esto sirve para verificar que los enlaces a Wikidata son correctos y para demostrar el potencial de conectar nuestros datos locales con la nube de datos abiertos de Wikidata.
+
+
+El proyecto toma un archivo CSV con información básica de los distritos de Valencia y lo convierte en un grafo de conocimiento, es decir, en datos estructurados y conectados que las máquinas pueden entender fácilmente. El código lee el archivo, limpia posibles errores y crea una ficha digital para cada distrito, donde se define su identidad (nombre y código), su localización geográfica (coordenadas y forma en el mapa) y un enlace a su equivalente en Wikidata, lo que permite relacionarlo con la información de Wikipedia y otras fuentes externas. Toda esta información se guarda en un archivo .ttl, un formato estándar para datos enlazados. Gracias a este proceso, los distritos dejan de ser solo filas de una tabla y pasan a ser datos inteligentes, reutilizables y preparados para su uso en mapas, aplicaciones, análisis de datos o sistemas de inteligencia artificial.

@@ -1,0 +1,12 @@
+nombre_estacion;direccion;latitud;longitud;tipo_zona;id_Distrito
+Bulevard Sud      ;BULEVARD SUD   ;0000039,45039601;-0000000,39633756;Urbana   ;10
+Valencia Centro   ;VALÈNCIA CENTRE;0000039,47054767;-0000000,37639765;Urbana   ;1
+Patraix           ;PATRAIX        ;0000039,45918909;-0000000,40141133;Urbana   ;8
+Moli del Sol      ;MOLÍ DEL SOL   ;0000039,48111211;-0000000,40880990;Suburbana;7
+Pista Silla       ;PISTA DE SILLA ;0000039,45806095;-0000000,37664394;Urbana   ;9
+Viveros           ;VIVERS         ;0000039,47964092;-0000000,36964822;Urbana   ;6
+Valencia Olivereta;OLIVERETA      ;0000039,46924424;-0000000,40592345;Urbana   ;7
+Avda. Francia     ;AVDA.FRANCIA   ;0000039,45782689;-0000000,34298623;Urbana   ;12
+Cabanyal          ;CABANYAL       ;0000039,47439079;-0000000,32853481;Urbana   ;11
+Politecnico       ;POLITÈCNIC     ;0000039,47964450;-0000000,33740066;Suburbana;13
+Dr. Lluch         ;DR.LLUCH       ;0000039,46668476;-0000000,32828949;Urbana   ;11

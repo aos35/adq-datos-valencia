@@ -431,7 +431,7 @@
     <created_date>2025/11/26 18:27:49.729</created_date>
     <modified_user>-</modified_user>
     <modified_date>2025/11/26 18:27:49.729</modified_date>
-    <key_for_session_key/>
+    <key_for_session_key>H4sIAAAAAAAA/wMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -474,6 +474,10 @@
         <attribute>N</attribute>
       </attribute>
       <attribute>
+        <code>MSSQL_DOUBLE_DECIMAL_SEPARATOR</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
         <code>PORT_NUMBER</code>
         <attribute>3306</attribute>
       </attribute>
@@ -505,6 +509,11 @@
   </connection>
   <order>
     <hop>
+      <from>Búsqueda en base de datos</from>
+      <to>Búsqueda en base de datos 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>Entrada Fichero de Texto</from>
       <to>Filtrar filas</to>
       <enabled>Y</enabled>
@@ -515,36 +524,245 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Normalización de fila</from>
-      <to>Búsqueda en base de datos</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Búsqueda en base de datos</from>
-      <to>Búsqueda en base de datos 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Búsqueda en base de datos 2</from>
+      <to>Búsqueda en base de datos 3 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Búsqueda en base de datos 3 2</from>
       <to>Búsqueda en base de datos 3</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Búsqueda en base de datos 3</from>
-      <to>Añadir constantes</to>
+      <to>Valor JavaScript modificado</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Añadir constantes</from>
+      <from>Valor JavaScript modificado</from>
       <to>Selecciona/Renombra valores</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Selecciona/Renombra valores</from>
-      <to>Salida Tabla</to>
+      <to>Insertar / Actualizar</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Normalización de fila</from>
+      <to>Búsqueda en base de datos</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insertar / Actualizar</from>
+      <to>Salida Fichero de Texto</to>
       <enabled>Y</enabled>
     </hop>
   </order>
+  <step>
+    <name>Búsqueda en base de datos</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>conexiondb6</connection>
+    <cache>Y</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>mydb</schema>
+      <table>dim_tiempo</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>fecha</name>
+        <field>fecha</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id_Tiempo</name>
+        <rename>id_Tiempo</rename>
+        <default>-1</default>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>656</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Búsqueda en base de datos 2</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>conexiondb6</connection>
+    <cache>Y</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>mydb</schema>
+      <table>dim_estacion</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>Y</eat_row_on_failure>
+      <key>
+        <name>estacion</name>
+        <field>nombre_estacion</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id_Estacion</name>
+        <rename>id_Estacion</rename>
+        <default>-1</default>
+        <type>Number</type>
+      </value>
+      <value>
+        <name>id_Distrito</name>
+        <rename>id_Distrito</rename>
+        <default>-1</default>
+        <type>Number</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>656</xloc>
+      <yloc>272</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Búsqueda en base de datos 3</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>conexiondb6</connection>
+    <cache>Y</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>mydb</schema>
+      <table>dim_contaminante</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>Y</eat_row_on_failure>
+      <key>
+        <name>nombre_contaminante</name>
+        <field>nombre_contaminante</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id_Contaminante</name>
+        <rename>id_Contaminante</rename>
+        <default>-1</default>
+        <type>Number</type>
+      </value>
+      <value>
+        <name>limite_recomendad</name>
+        <rename>limite_recomendad</rename>
+        <default>-1</default>
+        <type>Number</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>656</xloc>
+      <yloc>480</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Búsqueda en base de datos 3 2</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>conexiondb6</connection>
+    <cache>Y</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>mydb</schema>
+      <table>dim_zona</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>id_Distrito</name>
+        <field>id_Distrito</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id_Zona</name>
+        <rename>id_Zona</rename>
+        <default>1</default>
+        <type>Number</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>656</xloc>
+      <yloc>368</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>Entrada Fichero de Texto</name>
     <type>TextFileInput</type>
@@ -613,7 +831,7 @@
       <field>
         <name>fecha</name>
         <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <format>yyyy-MM-dd</format>
         <currency>€</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -672,10 +890,10 @@
       </field>
       <field>
         <name>pm1</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>BigNumber</type>
+        <format>0.00</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -688,7 +906,7 @@
       <field>
         <name>pm2_5</name>
         <type>BigNumber</type>
-        <format>#.##</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -703,7 +921,7 @@
       <field>
         <name>pm10</name>
         <type>BigNumber</type>
-        <format>#.##</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -717,10 +935,10 @@
       </field>
       <field>
         <name>no</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>BigNumber</type>
+        <format>0.00</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -732,10 +950,10 @@
       </field>
       <field>
         <name>no2</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>BigNumber</type>
+        <format>0.00</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -747,10 +965,10 @@
       </field>
       <field>
         <name>nox</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>BigNumber</type>
+        <format>0.00</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -762,10 +980,10 @@
       </field>
       <field>
         <name>o3</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>BigNumber</type>
+        <format>0.00</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -777,10 +995,10 @@
       </field>
       <field>
         <name>so2</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>BigNumber</type>
+        <format>0.00</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -793,7 +1011,7 @@
       <field>
         <name>co</name>
         <type>BigNumber</type>
-        <format>#.##</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -807,10 +1025,10 @@
       </field>
       <field>
         <name>nh3</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>BigNumber</type>
+        <format>0.00</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -823,7 +1041,7 @@
       <field>
         <name>c7h8</name>
         <type>BigNumber</type>
-        <format>#.##</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -838,7 +1056,7 @@
       <field>
         <name>c6h6</name>
         <type>BigNumber</type>
-        <format>#.##</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -852,10 +1070,10 @@
       </field>
       <field>
         <name>ruido</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>BigNumber</type>
+        <format>0.00</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -868,7 +1086,7 @@
       <field>
         <name>c8h10</name>
         <type>BigNumber</type>
-        <format>#.##</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -883,7 +1101,7 @@
       <field>
         <name>velocidad_del_viento</name>
         <type>BigNumber</type>
-        <format>#.##</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -897,10 +1115,10 @@
       </field>
       <field>
         <name>direccion_del_viento</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>BigNumber</type>
+        <format>0.00</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -913,7 +1131,7 @@
       <field>
         <name>temperatura</name>
         <type>BigNumber</type>
-        <format>#.##</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -927,10 +1145,10 @@
       </field>
       <field>
         <name>humidad_relativa</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>BigNumber</type>
+        <format>0.00</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -942,10 +1160,10 @@
       </field>
       <field>
         <name>presion</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>BigNumber</type>
+        <format>0.00</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -957,10 +1175,10 @@
       </field>
       <field>
         <name>radiacion_solar</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>BigNumber</type>
+        <format>0.00</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -973,7 +1191,7 @@
       <field>
         <name>precipitacion</name>
         <type>BigNumber</type>
-        <format>#.##</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -988,7 +1206,7 @@
       <field>
         <name>velocidad_maxima_del_viento</name>
         <type>BigNumber</type>
-        <format>#.##</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -1003,7 +1221,7 @@
       <field>
         <name>as_ng_m3</name>
         <type>BigNumber</type>
-        <format>#.###</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -1018,7 +1236,7 @@
       <field>
         <name>ni_ng_m3</name>
         <type>BigNumber</type>
-        <format>#.###</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -1033,7 +1251,7 @@
       <field>
         <name>cd_ng_m3</name>
         <type>BigNumber</type>
-        <format>#.###</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -1048,7 +1266,7 @@
       <field>
         <name>pb_ng_m3</name>
         <type>BigNumber</type>
-        <format>#.###</format>
+        <format>0.00</format>
         <currency>€</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -1062,10 +1280,10 @@
       </field>
       <field>
         <name>b_a_p_ng_m3</name>
-        <type>Number</type>
-        <format/>
+        <type>BigNumber</type>
+        <format>0.00</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -1078,9 +1296,9 @@
       <field>
         <name>fecha_creacion</name>
         <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <format>yyyy-MM-dd</format>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -1092,10 +1310,10 @@
       </field>
       <field>
         <name>fecha_baja</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format/>
         <currency>€</currency>
-        <decimal>,</decimal>
+        <decimal>.</decimal>
         <group>.</group>
         <nullif>-</nullif>
         <ifnull/>
@@ -1140,7 +1358,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>160</xloc>
+      <xloc>96</xloc>
       <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1187,8 +1405,113 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>368</xloc>
+      <xloc>272</xloc>
       <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insertar / Actualizar</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>conexiondb6</connection>
+    <commit>10000</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>mydb</schema>
+      <table>hecho_medicion_ambiental</table>
+      <key>
+        <name>id_Tiempo</name>
+        <field>id_Tiempo</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>id_Estacion</name>
+        <field>id_Estacion</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>id_Contaminante</name>
+        <field>id_Contaminante</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>valor_medido</name>
+        <rename>valor_medido</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>ruido_mapa_db</name>
+        <rename>ruido_mapa_db</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>velocidad_viento_ms</name>
+        <rename>velocidad_viento_ms</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>temperatura_c</name>
+        <rename>temperatura_c</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>hum_rel_pct</name>
+        <rename>hum_rel_pct</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>presion_hpa</name>
+        <rename>presion_hpa</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>id_Tiempo</name>
+        <rename>id_Tiempo</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>id_Estacion</name>
+        <rename>id_Estacion</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>id_Zona</name>
+        <rename>id_Zona</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>id_Contaminante</name>
+        <rename>id_Contaminante</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>calidad_ambiental</name>
+        <rename>calidad_ambiental</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1312</xloc>
+      <yloc>480</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1206,139 +1529,79 @@
     <typefield>nombre_contaminante</typefield>
     <fields>
       <field>
-        <name>pm1</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
-      </field>
-      <field>
         <name>pm2_5</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>pm2_5</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>pm10</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
-      </field>
-      <field>
-        <name>no</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>pm10</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>no2</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>no2</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>nox</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>nox</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>o3</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>o3</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>so2</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>so2</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>co</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
-      </field>
-      <field>
-        <name>nh3</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
-      </field>
-      <field>
-        <name>c7h8</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>co</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>c6h6</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
-      </field>
-      <field>
-        <name>ruido</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
-      </field>
-      <field>
-        <name>c8h10</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
-      </field>
-      <field>
-        <name>velocidad_del_viento</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
-      </field>
-      <field>
-        <name>direccion_del_viento</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
-      </field>
-      <field>
-        <name>temperatura</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
-      </field>
-      <field>
-        <name>humidad_relativa</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
-      </field>
-      <field>
-        <name>presion</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>c6h6</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>radiacion_solar</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>radiacion_solar</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>precipitacion</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
-      </field>
-      <field>
-        <name>velocidad_maxima_del_viento</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>precipitacion</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>as_ng_m3</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>as_ng_m3</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>ni_ng_m3</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>ni_ng_m3</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>cd_ng_m3</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>cd_ng_m3</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>pb_ng_m3</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>pb_ng_m3</value>
+        <norm>valor_medido</norm>
       </field>
       <field>
         <name>b_a_p_ng_m3</name>
-        <value>contaminante</value>
-        <norm>valor</norm>
+        <value>b_a_p_ng_m3</value>
+        <norm>valor_medido</norm>
       </field>
     </fields>
     <attributes/>
@@ -1350,191 +1613,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>560</xloc>
+      <xloc>464</xloc>
       <yloc>160</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Búsqueda en base de datos</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>conexiondb6</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>mydb</schema>
-      <table>dim_tiempo</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>fecha</name>
-        <field>fecha</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>id_Tiempo</name>
-        <rename>id_Tiempo</rename>
-        <default>-1</default>
-        <type>Integer</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>768</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Búsqueda en base de datos 2</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>conexiondb6</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>mydb</schema>
-      <table>dim_estacion</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>estacion</name>
-        <field>nombre_estacion</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>id_Estacion</name>
-        <rename>id_Estacion</rename>
-        <default>-1</default>
-        <type>Number</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>768</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Búsqueda en base de datos 3</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>conexiondb6</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>mydb</schema>
-      <table>dim_contaminante</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>nombre_contaminante</name>
-        <field>nombre_contaminante</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>id_Contaminante</name>
-        <rename>id_Contaminante</rename>
-        <default>-1</default>
-        <type>Number</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>768</xloc>
-      <yloc>400</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Añadir constantes</name>
-    <type>Constant</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_Zona</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>-1</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>944</xloc>
-      <yloc>400</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1551,26 +1631,76 @@
     </partitioning>
     <fields>
       <field>
-        <name>id_Contaminante</name>
-        <rename/>
+        <name>id</name>
       </field>
       <field>
-        <name>id_Estacion</name>
-        <rename/>
+        <name>fecha</name>
+      </field>
+      <field>
+        <name>nombre_contaminante</name>
+      </field>
+      <field>
+        <name>valor_medido</name>
+      </field>
+      <field>
+        <name>ruido</name>
+        <rename>ruido_mapa_db</rename>
+      </field>
+      <field>
+        <name>velocidad_del_viento</name>
+        <rename>velocidad_viento_ms</rename>
+      </field>
+      <field>
+        <name>temperatura</name>
+        <rename>temperatura_c</rename>
+      </field>
+      <field>
+        <name>humidad_relativa</name>
+        <rename>hum_rel_pct</rename>
+      </field>
+      <field>
+        <name>presion</name>
+        <rename>presion_hpa</rename>
       </field>
       <field>
         <name>id_Tiempo</name>
-        <rename/>
+      </field>
+      <field>
+        <name>id_Estacion</name>
+      </field>
+      <field>
+        <name>id_Distrito</name>
       </field>
       <field>
         <name>id_Zona</name>
-        <rename/>
       </field>
       <field>
-        <name>valor</name>
-        <rename/>
+        <name>id_Contaminante</name>
+      </field>
+      <field>
+        <name>limite_recomendad</name>
+      </field>
+      <field>
+        <name>calidad_ambiental</name>
       </field>
       <select_unspecified>N</select_unspecified>
+      <meta>
+        <name>valor_medido</name>
+        <rename>valor_medido</rename>
+        <type>BigNumber</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1581,14 +1711,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1136</xloc>
-      <yloc>400</yloc>
+      <xloc>1104</xloc>
+      <yloc>480</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Salida Tabla</name>
-    <type>TableOutput</type>
+    <name>Valor JavaScript modificado</name>
+    <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1597,43 +1727,46 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>conexiondb6</connection>
-    <schema/>
-    <table/>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>// Inicializar la variable de calidad
+var calidad_ambiental = "No Clasificada";
+
+// Si el valor medido es nulo o el límite no está definido, no podemos clasificar
+if (valor_medido === null || limite_recomendad === null || limite_recomendad &lt;= 0) {
+    calidad_ambiental = "Datos Insuficientes";
+} 
+// Clasificación principal
+else {
+    // Si el valor está por debajo o es igual al límite recomendado, la calidad es buena.
+    if (valor_medido &lt;= limite_recomendad) {
+        calidad_ambiental = "Buena";
+    } 
+    // Si el valor excede ligeramente el límite (ej. hasta un 50% más)
+    else if (valor_medido &lt;= limite_recomendad * 1.5) {
+        calidad_ambiental = "Aceptable";
+    } 
+    // Si el valor excede significativamente el límite
+    else {
+        calidad_ambiental = "Mala";
+    }
+}
+
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
     <fields>
       <field>
-        <column_name>id_Contaminante</column_name>
-        <stream_name>id_Contaminante</stream_name>
-      </field>
-      <field>
-        <column_name>id_Estacion</column_name>
-        <stream_name>id_Estacion</stream_name>
-      </field>
-      <field>
-        <column_name>id_Tiempo</column_name>
-        <stream_name>id_Tiempo</stream_name>
-      </field>
-      <field>
-        <column_name>id_Zona</column_name>
-        <stream_name>id_Zona</stream_name>
-      </field>
-      <field>
-        <column_name>valor</column_name>
-        <stream_name>valor</stream_name>
+        <name>calidad_ambiental</name>
+        <rename>calidad_ambiental</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
       </field>
     </fields>
     <attributes/>
@@ -1645,8 +1778,257 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1312</xloc>
-      <yloc>400</yloc>
+      <xloc>880</xloc>
+      <yloc>480</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Salida Fichero de Texto</name>
+    <type>TextFileOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <separator>;</separator>
+    <enclosure>"</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>Y</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding/>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>${Internal.Entry.Current.Directory}/T06</name>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>csv</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>Y</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery/>
+    </file>
+    <fields>
+      <field>
+        <name>id</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>€</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>fecha</name>
+        <type>Date</type>
+        <format>yyyy-MM-dd</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>nombre_contaminante</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>valor_medido</name>
+        <type>BigNumber</type>
+        <format>0.00</format>
+        <currency>€</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>ruido_mapa_db</name>
+        <type>BigNumber</type>
+        <format>0.00</format>
+        <currency>€</currency>
+        <decimal>.</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>velocidad_viento_ms</name>
+        <type>BigNumber</type>
+        <format>0.00</format>
+        <currency>€</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>temperatura_c</name>
+        <type>BigNumber</type>
+        <format>0.00</format>
+        <currency>€</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>hum_rel_pct</name>
+        <type>BigNumber</type>
+        <format>0.00</format>
+        <currency>€</currency>
+        <decimal>.</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>presion_hpa</name>
+        <type>BigNumber</type>
+        <format>0.00</format>
+        <currency>€</currency>
+        <decimal>.</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>id_Tiempo</name>
+        <type>Integer</type>
+        <format>####0;-####0</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>9</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>id_Estacion</name>
+        <type>Integer</type>
+        <format>####0;-####0</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>9</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>id_Distrito</name>
+        <type>Integer</type>
+        <format>####0;-####0</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>9</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>id_Zona</name>
+        <type>Integer</type>
+        <format>####0;-####0</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>9</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>id_Contaminante</name>
+        <type>Integer</type>
+        <format>####0;-####0</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>9</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>limite_recomendad</name>
+        <type>Number</type>
+        <format>####0.0#########;-####0.0#########</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>10</length>
+        <precision>3</precision>
+      </field>
+      <field>
+        <name>calidad_ambiental</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1488</xloc>
+      <yloc>480</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

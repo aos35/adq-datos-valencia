@@ -472,7 +472,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>C:\Users\Usuario\Desktop\TERCERO CARRERA\1º CUATRI\ADQ Y PREPARACION DATOS\T05_Cargar_Dim_Zona.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}/T05_Cargar_Dim_Zona.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>

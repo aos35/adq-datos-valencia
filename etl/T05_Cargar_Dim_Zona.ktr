@@ -436,83 +436,7 @@
   </info>
   <notepads>
   </notepads>
-  <connection>
-    <name>conexionprueba</name>
-    <server>127.0.0.1</server>
-    <type>MYSQL</type>
-    <access>Native</access>
-    <database>mydb</database>
-    <port>3306</port>
-    <username>root</username>
-    <password>Encrypted 2be98af850fcb9e8db116bd228ec3ff90</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute>
-        <code>EXTRA_OPTION_MYSQL.defaultFetchSize</code>
-        <attribute>500</attribute>
-      </attribute>
-      <attribute>
-        <code>EXTRA_OPTION_MYSQL.serverTimezone</code>
-        <attribute>Europe/Madrid</attribute>
-      </attribute>
-      <attribute>
-        <code>EXTRA_OPTION_MYSQL.useCursorFetch</code>
-        <attribute>true</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>IS_CLUSTERED</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>MSSQL_DOUBLE_DECIMAL_SEPARATOR</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>PORT_NUMBER</code>
-        <attribute>3306</attribute>
-      </attribute>
-      <attribute>
-        <code>PRESERVE_RESERVED_WORD_CASE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>QUOTE_ALL_FIELDS</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>STREAM_RESULTS</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>USE_POOLING</code>
-        <attribute>N</attribute>
-      </attribute>
-    </attributes>
-  </connection>
   <order>
-    <hop>
-      <from>Partir campos</from>
-      <to>Selecciona/Renombra valores 2</to>
-      <enabled>Y</enabled>
-    </hop>
     <hop>
       <from>CSV file input</from>
       <to>Partir campos</to>
@@ -529,122 +453,41 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Calculadora</from>
-      <to>Calculadora 2</to>
+      <from>Partir campos</from>
+      <to>select</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Calculadora 2</from>
-      <to>Calculadora 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Calculadora 3</from>
-      <to>Calculadora 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Selecciona/Renombra valores 2</from>
-      <to>Juntar filas (producto cartesiano)</to>
+      <from>select</from>
+      <to>Join rows (cartesian product)</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Selecciona/Renombra valores</from>
-      <to>Juntar filas (producto cartesiano)</to>
+      <to>Join rows (cartesian product)</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Juntar filas (producto cartesiano)</from>
-      <to>Calculadora</to>
+      <from>Join rows (cartesian product)</from>
+      <to>Valor JavaScript modificado</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Calculadora 4</from>
-      <to>Agrupar por</to>
+      <from>Valor JavaScript modificado</from>
+      <to>Select-campos</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Agrupar por</from>
-      <to>Ordenar filas 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Ordenar filas 2</from>
-      <to>Multiway merge join 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Multiway merge join 2</from>
-      <to>Selecciona/Renombra valores 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Calculadora 4</from>
-      <to>Ordenar filas</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Ordenar filas</from>
-      <to>Multiway merge join 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Selecciona/Renombra valores 3</from>
+      <from>Select-campos</from>
       <to>Filas Unicas</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Filas Unicas</from>
-      <to>Salida Tabla</to>
+      <to>Salida Fichero de Texto</to>
       <enabled>Y</enabled>
     </hop>
   </order>
-  <step>
-    <name>Agrupar por</name>
-    <type>GroupBy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <all_rows>N</all_rows>
-    <ignore_aggregate>N</ignore_aggregate>
-    <field_ignore/>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>grp</prefix>
-    <add_linenr>N</add_linenr>
-    <linenr_fieldname/>
-    <give_back_row>N</give_back_row>
-    <group>
-      <field>
-        <name>Código distrito</name>
-      </field>
-    </group>
-    <fields>
-      <field>
-        <aggregate>raiz_min</aggregate>
-        <subject>raiz</subject>
-        <type>MIN</type>
-        <valuefield/>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1344</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>CSV file input</name>
     <type>CsvInput</type>
@@ -725,8 +568,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>64</xloc>
-      <yloc>128</yloc>
+      <xloc>80</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -810,202 +653,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>64</xloc>
-      <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Calculadora</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <failIfNoFile>Y</failIfNoFile>
-    <calculation>
-      <field_name>delta_latitud</field_name>
-      <calc_type>SUBTRACT</calc_type>
-      <field_a>longitud_zona</field_a>
-      <field_b>latitud_centroide</field_b>
-      <field_c/>
-      <value_type>Number</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>delta_longitud</field_name>
-      <calc_type>SUBTRACT</calc_type>
-      <field_a>longitud_zona</field_a>
-      <field_b>longitud_centroide</field_b>
-      <field_c/>
-      <value_type>Number</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>720</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Calculadora 2</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <failIfNoFile>Y</failIfNoFile>
-    <calculation>
-      <field_name>delta_lat_sq</field_name>
-      <calc_type>SQUARE</calc_type>
-      <field_a>delta_latitud</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>None</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>delta_lon_sq</field_name>
-      <calc_type>SQUARE</calc_type>
-      <field_a>delta_longitud</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>None</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>832</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Calculadora 3</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <failIfNoFile>Y</failIfNoFile>
-    <calculation>
-      <field_name>suma</field_name>
-      <calc_type>ADD</calc_type>
-      <field_a>delta_lat_sq</field_a>
-      <field_b>delta_lon_sq</field_b>
-      <field_c/>
-      <value_type>None</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>944</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Calculadora 4</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <failIfNoFile>Y</failIfNoFile>
-    <calculation>
-      <field_name>raiz</field_name>
-      <calc_type>SQUARE_ROOT</calc_type>
-      <field_a>suma</field_a>
-      <field_b/>
-      <field_c/>
-      <value_type>None</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1056</xloc>
-      <yloc>176</yloc>
+      <xloc>80</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1154,14 +803,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>96</xloc>
-      <yloc>432</yloc>
+      <xloc>48</xloc>
+      <yloc>544</yloc>
       <draw>N</draw>
     </GUI>
   </step>
   <step>
-    <name>Filas Unicas</name>
-    <type>Unique</type>
+    <name>Join rows (cartesian product)</name>
+    <type>JoinRows</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1170,45 +819,10 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <count_rows>N</count_rows>
-    <count_field/>
-    <reject_duplicate_row>N</reject_duplicate_row>
-    <error_description/>
-    <fields>
-      <field>
-        <name>gid</name>
-        <case_insensitive>N</case_insensitive>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1184</xloc>
-      <yloc>672</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Juntar filas (producto cartesiano)</name>
-    <type>JoinRows</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>C:\Users\Usuario\Desktop\TERCERO CARRERA\1º CUATRI\ADQ Y PREPARACION DATOS</directory>
+    <directory>%%java.io.tmpdir%%</directory>
     <prefix>out</prefix>
     <cache_size>500</cache_size>
-    <main>Selecciona/Renombra valores</main>
+    <main/>
     <compare>
       <condition>
         <negated>N</negated>
@@ -1226,154 +840,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>544</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Multiway merge join</name>
-    <type>MultiwayMergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>INNER</join_type>
-    <number_input>0</number_input>
-    <keys>
-    </keys>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>832</xloc>
-      <yloc>368</yloc>
-      <draw>N</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Multiway merge join 2</name>
-    <type>MultiwayMergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>INNER</join_type>
-    <step0>Ordenar filas</step0>
-    <step1>Ordenar filas 2</step1>
-    <number_input>2</number_input>
-    <keys>
-      <key>Código distrito</key>
-      <key>Código distrito</key>
-    </keys>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1184</xloc>
-      <yloc>448</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Ordenar filas</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>C:\Users\Usuario\Desktop\TERCERO CARRERA\1º CUATRI\ADQ Y PREPARACION DATOS</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>Código distrito</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1104</xloc>
-      <yloc>304</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Ordenar filas 2</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>C:\Users\Usuario\Desktop\TERCERO CARRERA\1º CUATRI\ADQ Y PREPARACION DATOS</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>Código distrito</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1280</xloc>
-      <yloc>304</yloc>
+      <xloc>608</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1432,8 +900,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>192</xloc>
-      <yloc>128</yloc>
+      <xloc>304</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1453,21 +921,6 @@
     <enclosure/>
     <fields>
       <field>
-        <name>longitud_centroide</name>
-        <id/>
-        <idrem>N</idrem>
-        <type>String</type>
-        <format/>
-        <group/>
-        <decimal/>
-        <currency/>
-        <length>40</length>
-        <precision>-1</precision>
-        <nullif/>
-        <ifnull/>
-        <trimtype>both</trimtype>
-      </field>
-      <field>
         <name>latitud_centroide</name>
         <id/>
         <idrem>N</idrem>
@@ -1476,7 +929,22 @@
         <group/>
         <decimal/>
         <currency/>
-        <length>40</length>
+        <length>-1</length>
+        <precision>-1</precision>
+        <nullif/>
+        <ifnull/>
+        <trimtype>both</trimtype>
+      </field>
+      <field>
+        <name>longitud_centroide</name>
+        <id/>
+        <idrem>N</idrem>
+        <type>String</type>
+        <format/>
+        <group/>
+        <decimal/>
+        <currency/>
+        <length>-1</length>
         <precision>-1</precision>
         <nullif/>
         <ifnull/>
@@ -1492,76 +960,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>192</xloc>
-      <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Salida Tabla</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>conexionprueba</connection>
-    <schema>mydb</schema>
-    <table>dim_zona</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>id_Zona</column_name>
-        <stream_name>gid</stream_name>
-      </field>
-      <field>
-        <column_name>gridcode</column_name>
-        <stream_name>gridcode</stream_name>
-      </field>
-      <field>
-        <column_name>latitud_centroide</column_name>
-        <stream_name>latitud_zona</stream_name>
-      </field>
-      <field>
-        <column_name>longitud_centroide</column_name>
-        <stream_name>longitud_zona</stream_name>
-      </field>
-      <field>
-        <column_name>geo_shape</column_name>
-        <stream_name>geo_shape</stream_name>
-      </field>
-      <field>
-        <column_name>id_Distrito</column_name>
-        <stream_name>Código distrito</stream_name>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1184</xloc>
-      <yloc>816</yloc>
+      <xloc>224</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1569,6 +969,47 @@
     <name>Selecciona/Renombra valores</name>
     <type>SelectValues</type>
     <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>Código distrito</name>
+        <rename>codigo_distrito</rename>
+      </field>
+      <field>
+        <name>longitud_centroide</name>
+      </field>
+      <field>
+        <name>latitud_centroide</name>
+      </field>
+      <field>
+        <name>geo_shape</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>384</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select-campos</name>
+    <type>SelectValues</type>
+    <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
     <copies>1</copies>
@@ -1578,31 +1019,36 @@
     </partitioning>
     <fields>
       <field>
-        <name>latitud_centroide</name>
-        <length>15</length>
-        <precision>15</precision>
+        <name>codigo_distrito_zona</name>
+        <rename/>
       </field>
       <field>
-        <name>longitud_centroide</name>
-        <length>15</length>
-        <precision>15</precision>
+        <name>lenLista</name>
+        <rename/>
       </field>
       <field>
-        <name>Código distrito</name>
+        <name>gridcode</name>
+        <rename/>
       </field>
       <field>
-        <name>geo_shape</name>
+        <name>gid</name>
+        <rename/>
       </field>
       <field>
-        <name>﻿Nombre</name>
+        <name>latitud_zona</name>
+        <rename/>
+      </field>
+      <field>
+        <name>longitud_zona</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
       <meta>
-        <name>latitud_centroide</name>
-        <rename>latitud_centroide</rename>
+        <name>latitud_zona</name>
+        <rename>latitud_zona</rename>
         <type>Number</type>
         <length>15</length>
-        <precision>15</precision>
+        <precision>-2</precision>
         <conversion_mask/>
         <date_format_lenient>false</date_format_lenient>
         <date_format_locale/>
@@ -1615,11 +1061,11 @@
         <storage_type/>
       </meta>
       <meta>
-        <name>longitud_centroide</name>
-        <rename>longitud_centroide</rename>
+        <name>longitud_zona</name>
+        <rename>longitud_zona</rename>
         <type>Number</type>
         <length>15</length>
-        <precision>15</precision>
+        <precision>-2</precision>
         <conversion_mask/>
         <date_format_lenient>false</date_format_lenient>
         <date_format_locale/>
@@ -1641,13 +1087,120 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>368</xloc>
-      <yloc>224</yloc>
+      <xloc>976</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Selecciona/Renombra valores 2</name>
+    <name>Valor JavaScript modificado</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>// Inicializar la lista de distritos solo una vez
+if (typeof listaDistritos === "undefined") {
+    listaDistritos = [];
+}
+
+
+// Verificar que no esté duplicado (opcional)
+var existe = listaDistritos.some(function(d) {
+    return d.codigo === codigo_distrito;
+});
+
+if (!existe) {
+    listaDistritos.push({
+        codigo: codigo_distrito,
+        lat: parseFloat(latitud_centroide),
+        lon: parseFloat(longitud_centroide)
+    });
+}
+
+function haversine(lat1, lon1, lat2, lon2) {
+    var R = 6371e3; // metros
+    var phi1 = lat1 * Math.PI/180;
+    var phi2 = lat2 * Math.PI/180;
+    var dphi = (lat2-lat1) * Math.PI/180;
+    var dlambda = (lon2-lon1) * Math.PI/180;
+
+    var a = Math.sin(dphi/2) * Math.sin(dphi/2) +
+            Math.cos(phi1) * Math.cos(phi2) *
+            Math.sin(dlambda/2) * Math.sin(dlambda/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    return R * c;
+}
+
+// Coordenadas de la zona
+var latZona = parseFloat(latitud_zona);
+var lonZona = parseFloat(longitud_zona);
+
+var minDist = Number.MAX_VALUE;
+var distritoCercano = null;
+
+//length???
+var lenLista = listaDistritos.length;
+
+for (var i=0; i&lt;listaDistritos.length; i++) {
+    var dist = haversine(latZona, lonZona, listaDistritos[i].lat, listaDistritos[i].lon);
+    if (dist &lt; minDist) {
+        minDist = dist;
+        distritoCercano = listaDistritos[i].codigo;
+    }
+}
+
+// Resultado final: cada zona recibe su distrito
+codigo_distrito_zona = distritoCercano;
+
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>codigo_distrito_zona</name>
+        <rename>codigo_distrito_zona</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>lenLista</name>
+        <rename>lenLista</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>816</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>select</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -1658,6 +1211,18 @@
       <schema_name/>
     </partitioning>
     <fields>
+      <field>
+        <name>gridcode</name>
+      </field>
+      <field>
+        <name>gid</name>
+      </field>
+      <field>
+        <name>latitud_zona</name>
+      </field>
+      <field>
+        <name>longitud_zona</name>
+      </field>
       <select_unspecified>N</select_unspecified>
       <meta>
         <name>latitud_zona</name>
@@ -1703,14 +1268,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>368</xloc>
-      <yloc>128</yloc>
+      <xloc>608</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Selecciona/Renombra valores 3</name>
-    <type>SelectValues</type>
+    <name>Filas Unicas</name>
+    <type>Unique</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1719,134 +1284,15 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
+    <count_rows>N</count_rows>
+    <count_field/>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
     <fields>
       <field>
-        <name>gid</name>
-        <rename/>
+        <name>codigo_distrito_zona</name>
+        <case_insensitive>N</case_insensitive>
       </field>
-      <field>
-        <name>gridcode</name>
-        <rename/>
-      </field>
-      <field>
-        <name>latitud_zona</name>
-        <rename/>
-      </field>
-      <field>
-        <name>longitud_zona</name>
-        <rename/>
-      </field>
-      <field>
-        <name>geo_shape</name>
-        <rename/>
-      </field>
-      <field>
-        <name>Código distrito</name>
-        <rename/>
-      </field>
-      <select_unspecified>N</select_unspecified>
-      <meta>
-        <name>gid</name>
-        <rename>gid</rename>
-        <type>Number</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>gridcode</name>
-        <rename>gridcode</rename>
-        <type>Number</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>latitud_zona</name>
-        <rename>latitud_zona</rename>
-        <type>Number</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>longitud_zona</name>
-        <rename>longitud_zona</rename>
-        <type>Number</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>geo_shape</name>
-        <rename>geo_shape</rename>
-        <type>String</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>Código distrito</name>
-        <rename>Código distrito</rename>
-        <type>Number</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1857,8 +1303,137 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1184</xloc>
-      <yloc>544</yloc>
+      <xloc>1088</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Salida Fichero de Texto</name>
+    <type>TextFileOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <separator>;</separator>
+    <enclosure>"</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>Y</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding>UTF-8</encoding>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>${Internal.Entry.Current.Directory}/T05</name>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>csv</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>Y</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery/>
+    </file>
+    <fields>
+      <field>
+        <name>codigo_distrito_zona</name>
+        <type>Integer</type>
+        <format>####0;-####0</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>lenLista</name>
+        <type>Integer</type>
+        <format>####0;-####0</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>gridcode</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>€</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>gid</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>€</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>15</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>latitud_zona</name>
+        <type>Number</type>
+        <format>.000000000000000</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>15</length>
+        <precision>15</precision>
+      </field>
+      <field>
+        <name>longitud_zona</name>
+        <type>Number</type>
+        <format>.000000000000000</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group/>
+        <nullif/>
+        <trim_type>both</trim_type>
+        <length>15</length>
+        <precision>15</precision>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1248</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
